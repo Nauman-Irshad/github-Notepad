@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <svg height="24" viewBox="0 0 16 16" width="24">
+                    <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+                <span>Task Tracker</span>
+            </div>
+            <nav>
+                <a href="#" id="profileLink">
+                    <div class="profile-icon" id="profileIcon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                </a>
+            </nav>
+        </div>
+    </header>
+    <style>
+        /* Profile Icon Styles */
+.profile-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--gh-green-0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.profile-icon svg {
+    width: 20px;
+    height: 20px;
+    color: var(--gh-text-light);
+}
+
+.profile-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+        :root {
+            --gh-green-0: #ebedf0;
+            --gh-green-1: #9be9a8;
+            --gh-green-2: #40c463;
+            --gh-green-3: #30a14e;
+            --gh-green-4: #216e39;
+            --gh-header: #24292f;
+            --gh-text: #24292e;
+            --gh-text-light: #57606a;
+            --gh-border: #d0d7de;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gh-text);
+            line-height: 1.5;
+            background-color: #f6f8fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--gh-header);
+            color: white;
+            padding: 16px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo svg {
+            margin-right: 8px;
+            fill: white;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        .container {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .task-section {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .calendar-section {
+            flex: 2;
+            overflow-x: auto;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--gh-text);
+        }
+        
+        h2 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            color: var(--gh-text);
+        }
+        
+        /* Task Input */
+        .task-input {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--gh-border);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--gh-green-3);
+            box-shadow: 0 0 0 3px rgba(46, 164, 79, 0.2);
+        }
+        
+        button {
+            background-color: var(--gh-green-2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: inherit;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        button:hover {
+            background-color: var(--gh-green-3);
+        }
+        
+        button:disabled {
+            background-color: var(--gh-green-0);
+            cursor: not-allowed;
+        }
+        
+        /* Task List */
+        .task-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gh-border);
+        }
+        
+        .task-checkbox {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .task-text {
+            flex: 1;
+            padding: 4px 0;
+            cursor: pointer;
+        }
+        
+        .task-text.completed {
+            text-decoration: line-through;
+            color: var(--gh-text-light);
+        }
+        
+        .task-text.editing {
+            border: 1px solid var(--gh-border);
+            border-radius: 4px;
+            padding: 4px 8px;
+            background-color: white;
+        }
+        
+        /* Calendar Styles */
+        .calendar-container {
+            display: flex;
+            margin-top: 10px;
+        }
+        
+        .weekday-labels {
+            display: flex;
+            flex-direction: column;
+            margin-right: 5px;
+            font-size: 12px;
+            color: var(--gh-text-light);
+            text-align: right;
+            padding-top: 22px;
+        }
+        
+        .weekday-label {
+            height: 15px;
+            margin-bottom: 3px;
+            line-height: 15px;
+        }
+        
+        .calendar-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .month-labels {
+            display: flex;
+            margin-left: 5px;
+            height: 20px;
+            font-size: 12px;
+            color: var(--gh-text-light);
+        }
+        
+        .month-label {
+            flex-grow: 1;
+            text-align: left;
+            padding-left: 2px;
+        }
+        
+        .graph-grid {
+            display: flex;
+            gap: 3px;
+        }
+        
+        .week-column {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        
+        .day-box {
+            width: 15px;
+            height: 15px;
+            background-color: var(--gh-green-0);
+            border-radius: 2px;
+            position: relative;
+        }
+        
+        .day-box.level-1 { background-color: var(--gh-green-1); }
+        .day-box.level-2 { background-color: var(--gh-green-2); }
+        .day-box.level-3 { background-color: var(--gh-green-3); }
+        .day-box.level-4 { background-color: var(--gh-green-4); }
+        
+        .day-box:hover::after {
+            content: attr(data-date) ": " attr(data-count) " tasks";
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            background-color: var(--gh-text);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            z-index: 10;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--gh-text-light);
+            gap: 8px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-left: 5px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            margin-right: 5px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--gh-header);
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+        
+        .footer-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .calendar-section {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <main>
+        <h1>Your Daily Task Tracker</h1>
+        
+        <div class="container">
+            <section class="task-section">
+                <h2>Today's Tasks</h2>
+                <div class="task-input">
+                    <input type="text" id="taskInput" placeholder="Add a new task..." maxlength="60">
+                    <button id="addTask">Add</button>
+                </div>
+                
+                <ul class="task-list" id="taskList">
+                    <!-- Tasks will be added here dynamically -->
+                </ul>
+                
+                <div class="task-stats">
+                    <p id="taskCounter">0 of 0 tasks completed</p>
+                </div>
+            </section>
+            
+            <section class="calendar-section">
+                <h2>Your Contribution Calendar</h2>
+                <div class="calendar-container">
+                    <div class="weekday-labels">
+                        <div class="weekday-label">Mon</div>
+                        <div class="weekday-label"></div>
+                        <div class="weekday-label">Wed</div>
+                        <div class="weekday-label"></div>
+                        <div class="weekday-label">Fri</div>
+                        <div class="weekday-label"></div>
+                        <div class="weekday-label">Sun</div>
+                    </div>
+                    
+                    <div class="calendar-content">
+                        <div class="month-labels" id="monthLabels">
+                            <!-- Month labels will be added here dynamically -->
+                        </div>
+                        
+                        <div class="graph-grid" id="graphGrid">
+                            <!-- Calendar grid will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: var(--gh-green-0);"></div>
+                        <span>Less</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: var(--gh-green-1);"></div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: var(--gh-green-2);"></div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: var(--gh-green-3);"></div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: var(--gh-green-4);"></div>
+                        <span>More</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-container">
+            <div>© 2023 GitHub-Style Task Tracker</div>
+            <div class="footer-links">
+                <a href="#">Terms</a>
+                <a href="#">Privacy</a>
+                <a href="#">Help</a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Profile icon functionality
+const profileLink = document.getElementById('profileLink');
+const profileIcon = document.getElementById('profileIcon');
+
+// Load profile image if exists
+const savedProfile = localStorage.getItem('userProfile');
+if (savedProfile) {
+    const profile = JSON.parse(savedProfile);
+    if (profile.avatar) {
+        profileIcon.innerHTML = `<img src="${profile.avatar}" alt="Profile">`;
+    }
+}
+
+// Link to profile page
+profileLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.href = 'id.html';
+});
+        // Initialize tasks array
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        let completionHistory = JSON.parse(localStorage.getItem('completionHistory')) || {};
+        
+        // DOM elements
+        const taskInput = document.getElementById('taskInput');
+        const addTaskBtn = document.getElementById('addTask');
+        const taskList = document.getElementById('taskList');
+        const taskCounter = document.getElementById('taskCounter');
+        const graphGrid = document.getElementById('graphGrid');
+        const monthLabels = document.getElementById('monthLabels');
+        
+        // Render tasks
+        function renderTasks() {
+            taskList.innerHTML = '';
+            
+            if (tasks.length === 0) {
+                const li = document.createElement('li');
+                li.textContent = 'No tasks yet. Add your first task above!';
+                li.style.color = 'var(--gh-text-light)';
+                li.style.fontStyle = 'italic';
+                taskList.appendChild(li);
+            } else {
+                tasks.forEach((task, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'task-item';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.className = 'task-checkbox';
+                    checkbox.checked = task.completed;
+                    checkbox.addEventListener('change', () => toggleTask(index));
+                    
+                    const span = document.createElement('span');
+                    span.className = `task-text ${task.completed ? 'completed' : ''}`;
+                    span.textContent = task.text;
+                    span.addEventListener('click', () => editTask(index, span));
+                    
+                    li.appendChild(checkbox);
+                    li.appendChild(span);
+                    taskList.appendChild(li);
+                });
+            }
+            
+            // Update task counter
+            const completedCount = tasks.filter(t => t.completed).length;
+            taskCounter.textContent = `${completedCount} of ${tasks.length} tasks completed`;
+            
+            updateCalendar();
+        }
+        
+        // Edit task text
+        function editTask(index, spanElement) {
+            const task = tasks[index];
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = task.text;
+            input.className = 'task-text editing';
+            
+            input.addEventListener('blur', () => {
+                saveTaskEdit(index, input.value, spanElement);
+            });
+            
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    saveTaskEdit(index, input.value, spanElement);
+                }
+            });
+            
+            spanElement.replaceWith(input);
+            input.focus();
+        }
+        
+        function saveTaskEdit(index, newText, spanElement) {
+            const trimmedText = newText.trim();
+            if (trimmedText) {
+                tasks[index].text = trimmedText;
+                saveTasks();
+                
+                spanElement.textContent = trimmedText;
+                spanElement.className = `task-text ${tasks[index].completed ? 'completed' : ''}`;
+                
+                const input = document.querySelector('.task-text.editing');
+                input.replaceWith(spanElement);
+            }
+        }
+        
+        // Toggle task completion
+        function toggleTask(index) {
+            tasks[index].completed = !tasks[index].completed;
+            saveTasks();
+            
+            // Record completion
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const dateStr = today.toISOString().split('T')[0];
+            
+            if (tasks[index].completed) {
+                // Increment count for today
+                if (!completionHistory[dateStr]) {
+                    completionHistory[dateStr] = 0;
+                }
+                completionHistory[dateStr]++;
+            } else {
+                // Decrement count for today
+                if (completionHistory[dateStr]) {
+                    completionHistory[dateStr]--;
+                    if (completionHistory[dateStr] <= 0) {
+                        delete completionHistory[dateStr];
+                    }
+                }
+            }
+            
+            localStorage.setItem('completionHistory', JSON.stringify(completionHistory));
+            renderTasks();
+        }
+        
+        // Add new task
+        function addTask() {
+            const text = taskInput.value.trim();
+            if (text && tasks.length < 5) {
+                tasks.push({
+                    text: text,
+                    completed: false
+                });
+                taskInput.value = '';
+                saveTasks();
+                renderTasks();
+            } else if (tasks.length >= 5) {
+                alert('Maximum of 5 tasks allowed. Complete some tasks to add more!');
+            }
+        }
+        
+        addTaskBtn.addEventListener('click', addTask);
+        
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+        
+        // Save tasks to localStorage
+        function saveTasks() {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+        
+        // Generate the GitHub-style calendar
+        function updateCalendar() {
+            graphGrid.innerHTML = '';
+            monthLabels.innerHTML = '';
+            
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth();
+            const currentDate = now.getDate();
+            
+            // Calculate the start date (1 year ago from today)
+            const startDate = new Date(currentYear - 1, currentMonth, currentDate + 1);
+            
+            // Generate month labels
+            let monthCols = {};
+            let currentLabelMonth = -1;
+            let monthColSpan = 0;
+            
+            // Create all weeks (columns)
+            for (let weekStart = new Date(startDate); weekStart <= now; weekStart.setDate(weekStart.getDate() + 7)) {
+                const weekEnd = new Date(weekStart);
+                weekEnd.setDate(weekEnd.getDate() + 6);
+                
+                // Check if month changed
+                const weekMonth = weekStart.getMonth();
+                if (weekMonth !== currentLabelMonth) {
+                    if (currentLabelMonth !== -1) {
+                        // Add previous month label
+                        const monthName = new Date(currentYear, currentLabelMonth, 1).toLocaleString('default', { month: 'short' });
+                        const label = document.createElement('div');
+                        label.className = 'month-label';
+                        label.textContent = monthName;
+                        label.style.gridColumn = monthCols[currentLabelMonth];
+                        monthLabels.appendChild(label);
+                    }
+                    
+                    currentLabelMonth = weekMonth;
+                    monthCols[weekMonth] = Object.keys(monthCols).length + 1;
+                    monthColSpan = 1;
+                } else {
+                    monthColSpan++;
+                }
+            }
+            
+            // Add the last month label
+            if (currentLabelMonth !== -1) {
+                const monthName = new Date(currentYear, currentLabelMonth, 1).toLocaleString('default', { month: 'short' });
+                const label = document.createElement('div');
+                label.className = 'month-label';
+                label.textContent = monthName;
+                label.style.gridColumn = monthCols[currentLabelMonth];
+                monthLabels.appendChild(label);
+            }
+            
+            // Reset to start date
+            startDate.setFullYear(currentYear - 1, currentMonth, currentDate + 1);
+            
+            // Create week columns
+            for (let weekStart = new Date(startDate); weekStart <= now; weekStart.setDate(weekStart.getDate() + 7)) {
+                const weekColumn = document.createElement('div');
+                weekColumn.className = 'week-column';
+                
+                // Create days for this week
+                for (let i = 0; i < 7; i++) {
+                    const dayDate = new Date(weekStart);
+                    dayDate.setDate(dayDate.getDate() + i);
+                    
+                    // Skip future dates
+                    if (dayDate > now) {
+                        const emptyDay = document.createElement('div');
+                        emptyDay.className = 'day-box';
+                        emptyDay.style.visibility = 'hidden';
+                        weekColumn.appendChild(emptyDay);
+                        continue;
+                    }
+                    
+                    const dayBox = document.createElement('div');
+                    dayBox.className = 'day-box';
+                    
+                    const dateStr = dayDate.toISOString().split('T')[0];
+                    const completionCount = completionHistory[dateStr] || 0;
+                    
+                    // Set level based on completion count (similar to GitHub)
+                    let level = 0;
+                    if (completionCount > 0) {
+                        level = Math.min(Math.ceil(completionCount / (5 / 4)), 4);
+                        dayBox.classList.add(`level-${level}`);
+                    }
+                    
+                    // Add tooltip data
+                    const formattedDate = dayDate.toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+                    
+                    dayBox.dataset.date = formattedDate;
+                    dayBox.dataset.count = completionCount;
+                    
+                    weekColumn.appendChild(dayBox);
+                }
+                
+                graphGrid.appendChild(weekColumn);
+            }
+        }
+        
+        // Initialize the app
+        renderTasks();
+    </script>
+</body>
+</html>
